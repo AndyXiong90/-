@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		body{
+			background-color: black;
+		}
+		.box{
+			width: 1000px;
+			height: 600px;
+			border: 1px solid #000;
+			margin: 30px auto;
+			perspective: 2000px;
+			position: relative;
+		}
+		.box p{
+			width: 40px;
+			height: 60px;
+			border: 1px solid #16a7a4;
+			position: absolute;
+			top:50%;
+			left:50%;
+			margin-left: -20px;
+			margin-top: -30px;
+			text-align: center;
+			line-height: 60px;
+			text-align: center;
+			font-size:20px;
+			color:#16a7a4;
+			transition: all 1s ease 0s;
+		}
+		.unit{
+			width: 1000px;
+			height: 600px;
+			transform-style: preserve-3d;
+			animation:z 10s linear 0s infinite;
+		}
+		@keyframes z{
+			from{
+				transform: none;
+			}
+			to{
+				transform: rotateX(360deg) rotateY(360deg);
+			}
+		}
+		button{
+			padding:10px 20px;
+			position: relative;
+			z-index: 99999;
+		}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<button id="qiu">球</button>
+		<button id="luoxuan">螺旋线</button>
+		<button id="baba">锥形</button>
+		<button id="juzhen">矩阵</button>
+		<div class="unit"></div>
+	</div>
+	<script type="text/javascript" src="js/jQuery.js"></script>
+	<script type="text/javascript">
+		
+		for (var i = 0; i < 200; i++) {
+			$('<p>' + i + '</p>').appendTo('.unit');
+		}
+
+		
+		$('#qiu').click(function(){
+			setQiu();
+		});
+
+		$('#luoxuan').click(function(){
+			setLuoxuan();
+		});
+
+		$('#baba').click(function(){
+			setBaba();
+		});
+
+		$('#juzhen').click(function(){
+			setJuzhen();
+		});
+
+
+		
+		function setQiu(){
+			
+			var data = [
+				[0, 26],
+				[20, 20],
+				[40, 18],
+				[60, 16],
+				[60, 14],
+				[80, 12],
+				[90, 7],
+				[-20, 20],
+				[-40, 18],
+				[-60, 16],
+				[-60, 14],
+				[-80, 12],
+				[-90, 7],
+			];
+
+			
+			var eqStart = 0;
+			for (var i = 0; i < data.length; i++) {
+				
+				for (var j = eqStart; j < eqStart + data[i][1]; j++){
+					$('p').eq(j).css('transform', 'rotateY(' + (360 / data[i][1] * (j - eqStart)) + 'deg) rotateX(' + data[i][0] + 'deg) translateZ(300px)');
+				}
+
+				eqStart += data[i][1];
+			}
+		}
+
+		function setLuoxuan(){
+			$('p').each(function(index){
+				$(this).css('transform', 'rotateY(' + index * 17 + 'deg) translateZ(300px) translateY(' +  (index * 3 - 200) + 'px)')
+			});
+		}
+
+
+		function setBaba(){
+			$('p').each(function(index){
+				$(this).css('transform', 'rotateY(' + index * 17 + 'deg) translateZ(' + (300 - index * 1.5) +'px) translateY(' +  (index * 3 - 200) + 'px)')
+			});
+		}
+
+
+		function setJuzhen(){
+			for (var i = 0; i < 5; i++) {
+				
+				for (var j = 0; j < 5; j++) {
+					
+					for (var k = 0; k < 8; k++) {
+						
+						$('p').eq(i * 40 + j * 8  + k).css('transform', 'translateZ(' + (100 * i) + 'px) translateY(' + (120 * j - 480) + 'px) translateX(' + (k * 80 - 200) + 'px)')
+					}
+				}
+			}
+		}
+
+	
+	</script>
+</body>
+</html>
